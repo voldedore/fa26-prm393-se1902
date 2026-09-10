@@ -6,11 +6,19 @@ mixin Swimmable {
   void swim() {
     print('Swimming');
   }
+
+  void prepare() {
+    print('Preparing swimming');
+    // swim();
+  }
 }
 
 mixin Flyable {
   void fly() {
     print('Flying...');
+  }
+  void prepare() {
+    print('Preparing flying');
   }
 }
 
@@ -23,7 +31,7 @@ class Bird {
 
 }
 
-class Duck extends Animal with Swimmable, Flyable implements Printable {
+class Duck extends Animal with Flyable, Swimmable implements Printable {
   int age;
   Duck(String name, this.age) : super(name);
 

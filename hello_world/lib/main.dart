@@ -114,6 +114,7 @@ void main() {
   d1.printInfo();
   d1.swim();
   d1.fly();
+  d1.prepare();
 }
 
 class Student {
