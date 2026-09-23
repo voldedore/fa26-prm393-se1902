@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:widget_intro/home_screen.dart';
+import 'package:widget_intro/login_screen.dart';
+import 'package:widget_intro/screen_one.dart';
+import 'package:widget_intro/settings_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,15 +42,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -54,17 +49,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  String _txtVal = "";
+  // Danh sach cac screen
+  final List<Widget> screens = [];
+  int _currentNavBarIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    screens.add(ScreenOne());
+    screens.add(HomeScreen());
+    screens.add(LoginScreen());
+    screens.add(SettingsScreen());
+  }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
         // TRY THIS: Try changing the color here to a specific color (to
@@ -75,51 +74,26 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: SingleChildScrollView(
-          child: Center( // Alt + enter
-            child: Column(
-              children: [
-                Text('Text fields'),
-                TextField(
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    hintText: 'Enter your email...'
-                  ),
-                  onChanged: (value) => setState(() {
-                    _txtVal = value;
-                  }),
-                ),
-                Text('You typed: $_txtVal'),
-                TextField(),
-                TextField(),
-                TextField(),
-                Divider(),
-                Text('Checkboxes'),
-                Text('Checkboxes val: '),
-                Divider(),
-                Text('Radio'),
-                Divider(),
-                Text('Slider'),
-                Divider(),
-                Text('Switch'),
-          
-              ],
-            ),
-          ),
-        ),
-      ),
+      body: screens[_currentNavBarIndex], // ScreenOne ? HomeScreen ? LoginScreen? Settings?
       bottomNavigationBar: BottomNavigationBar(
         // type: .fixed,
         type: BottomNavigationBarType.fixed,
         items: [
+
           BottomNavigationBarItem(icon: Icon(Icons.category), label: 'Input'),
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Login'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
         ],
+        onTap: (v) {
+          setState(() {
+            _currentNavBarIndex = v;
+          });
+        },
+        currentIndex: _currentNavBarIndex,
       ),
     );
   }

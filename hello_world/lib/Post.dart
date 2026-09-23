@@ -6,6 +6,13 @@ class Post {
 
   Post(this._userId, this._id, this._title, this._body);
 
+  // fromJson
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return Post(json['userId'], json['id'], json['title'], json['body']);
+  }
+
+  // toJson
+
   String get body => _body;
 
   set body(String value) {
