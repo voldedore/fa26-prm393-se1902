@@ -91,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           // 2. Navigator.pushReplacement(context, newRoute)
                           // 3. Navigator.pushAndRemoveUntil(context, newRoute, predicate)
                           // 4,5,6. Push named (tương tự, chỉ khác là ta phải khai báo tên các routes ở MaterialApp())
-                          Navigator.pushReplacementNamed(context, '/users_screen');
+                          Navigator.pushNamed(context, '/users_screen');
 
 
                           // 1) Chuyển màn hình qua 1 Scaffold

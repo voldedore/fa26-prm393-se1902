@@ -22,46 +22,60 @@ class _UsersScreenState extends State<UsersScreen> {
           title: Text('Users list'),
           backgroundColor: Theme.of(context).primaryColorDark,
         ),
-        body: Column(
-          children: [
-            Text('Users screen'),
-            ElevatedButton(
-              onPressed: () {
-                // try {
-                  Future<void> getUsers() async {
-                    final response = await http.get(
-                      Uri.parse('https://jsonplaceholder.typicode.com/users'),
-                    );
-                    if (response.statusCode == 200) {
-                      final List<dynamic> data = jsonDecode(response.body);
+        body:
+            // GridView.count(
+            //   crossAxisCount: 2,
+            //   children:
+            //     List.generate(20, (i) {
+            //       return Card(child: Column(children: [Text('User $i')]));
+            //     })
+            //   ,
+            // ),
+            Column(
+              children: [
+                Text('Users screen'),
+                ElevatedButton(
+                  onPressed: () {
+                    // try {
+                    Future<void> getUsers() async {
+                      final response = await http.get(
+                        Uri.parse('https://jsonplaceholder.typicode.com/users'),
+                      );
+                      if (response.statusCode == 200) {
+                        final List<dynamic> data = jsonDecode(response.body);
 
-                      setState(() {
-                        users = data.map((json) {
-                          return User.fromJson(json);
-                        }).toList();
-                      });
+                        setState(() {
+                          users = data.map((json) {
+                            return User.fromJson(json);
+                          }).toList();
+                        });
+                      }
                     }
-                  }
-                // } catch
-              },
-              child: Text('Fetch users'),
+                    getUsers();
+                  },
+                  child: Text('Fetch users'),
+                ),
+                // Grid
+                Expanded(
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    children: users.map((u) {
+                      return Card(child: Column(children: [Text(u.username)]));
+                    }).toList(),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
         bottomNavigationBar: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.category),
+              icon: Icon(Icons.grid_view),
               label: 'GridView',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.category),
-              label: 'ListView',
-            ),
+            BottomNavigationBarItem(icon: Icon(Icons.list), label: 'ListView'),
           ],
         ),
       ),
     );
   }
 }
-

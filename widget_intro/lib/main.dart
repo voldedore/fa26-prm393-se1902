@@ -20,9 +20,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Hello SE1902'),
+      // home: const MyHomePage(title: 'Hello SE1902'),
       initialRoute: '/',
       routes: {
+        '/': (context) => MyHomePage(title: 'Hello SE1902'),
         '/users_screen': (context) => UsersScreen(),
       },
     );
