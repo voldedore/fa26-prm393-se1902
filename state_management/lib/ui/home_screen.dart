@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:state_management/providers/user_provider.dart';
+import 'package:state_management/providers/user_notifier.dart';
 
 // --------- STATEFUL -------------
 class HomeScreen extends ConsumerStatefulWidget {
@@ -14,20 +14,26 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final users = ref.watch(userProvider);
-
     return Scaffold(
       appBar: AppBar(title: Text('Users list')),
-      body: GridView.count(
-        crossAxisCount: 4,
-        children:
-          users.map((u) {
-            return Card(
-                child: Column(
-                    children: [Text(u.username)]
-                )
-            );
-          }).toList()
-        ,
+      body: Column(
+        children: [
+          ElevatedButton(onPressed: () {
+            ref.read(userProvider.notifier).fetchUsers();
+          }, child: Text('Fetch')),
+          ElevatedButton(onPressed: () {
+            ref.read(userProvider.notifier).clearUsers();
+          }, child: Text('Clear')),
+          Text('Total users: ${ref.watch(totalUsersProvider)}'),
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 4,
+              children: users.map((u) {
+                return Card(child: Column(children: [Text(u.username)]));
+              }).toList(),
+            ),
+          ),
+        ],
       ),
     );
   }
