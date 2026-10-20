@@ -46,9 +46,14 @@ class NoteNotifier extends _$NoteNotifier {
     await prefs.setStringList(_notesKey, noteStringList);
   }
 
-  void deleteNote(int id) {
-    // State -> List<Note> -> getById -> tạo state [] mới bỏ note tìm thấy ra
-    // Ghi lại state vào trong SF
+  Future<void> deleteNote(int id) async {
+    // Dựa trên state hiện tại (List<Note>)
+    // Lấy ra các Note mà id không khớp với input param
+    // VD state [4, 8, 10], param input delete id = 8 (deleteNote(8))
+    // state mới [4, 10]
+    state = state.where((note) => note.id != id).toList();
+    // persist
+    await _saveNotes();
   }
 
   void editNote(Note newNote) {

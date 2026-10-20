@@ -35,7 +35,11 @@ class _NoteListScreenState extends ConsumerState<NoteListScreen> {
               child: Column(
                   children: [
                     Text(note.title),
-                    Text(note.content)
+                    Text(note.content),
+                    IconButton(onPressed: () {
+                      // goi note notifier de delete note
+                      ref.read(noteProvider.notifier).deleteNote(note.id);
+                    }, icon: Icon(Icons.delete))
                   ]
                 )
               )
