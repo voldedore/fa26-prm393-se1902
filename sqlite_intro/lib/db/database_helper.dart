@@ -1,9 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:sqlite_intro/model/note.dart';
 
 class DatabaseHelper {
-  static const _databaseName = 'se1902_notemanagement.db';
+  final _databaseName = 'se1902_notemanagement.db';
   static const _noteTableName = 'notes';
 
   // Singleton pattern
@@ -27,6 +29,12 @@ class DatabaseHelper {
    */
 
   Future<Database> _initDatabase() async {
+    // For web platform
+    if (kIsWeb) {
+      databaseFactory = databaseFactoryFfiWeb; // đổi factory qua ffi web
+      return openDatabase(_databaseName, version: 1, onCreate: _onCreate);
+    }
+
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, _databaseName);
     return openDatabase(path, version: 1, onCreate: _onCreate);
@@ -65,6 +73,10 @@ class DatabaseHelper {
   }
 
   // CREATE
+  Future<int> create(Note note) async {
+    final db = await database;
+    return db.insert(_noteTableName, note.toJson());
+  }
 
   // UPDATE
 

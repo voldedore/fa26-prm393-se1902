@@ -35,6 +35,7 @@ dependencies:
   flutter_riverpod: ^3.2.0
   riverpod_annotation: ^4.0.1
   cupertino_icons: ^1.0.8
+  sqflite_common_ffi_web: ^1.2.0
 
 dev_dependencies:
   flutter_test:

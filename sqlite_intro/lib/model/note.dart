@@ -1,13 +1,13 @@
 class Note {
-  int id;
+  int? id;
   String title;
   String content;
 
-  Note(this.id, this.title, this.content);
+  Note({this.id, required this.title, required this.content});
 
   // fromJson
   factory Note.fromJson(Map<String, dynamic> json) {
-    return Note(json['id'], json['title'], json['content']);
+    return Note(id: json['id'], title: json['title'], content: json['content']);
   }
 
   // toJson
