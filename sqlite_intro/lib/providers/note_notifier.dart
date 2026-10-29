@@ -20,4 +20,10 @@ class NoteNotifier extends _$NoteNotifier {
     ref.invalidateSelf(); // báo hiệu build() cần được chạy lại
     await future;         // chờ state mới load xong
   }
+
+  Future<void> deleteNote(int id) async {
+    await DatabaseHelper.instance.delete(id);
+    ref.invalidateSelf();
+    await future;
+  }
 }

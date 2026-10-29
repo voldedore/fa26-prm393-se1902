@@ -81,4 +81,8 @@ class DatabaseHelper {
   // UPDATE
 
   // DELETE
+  Future<int> delete(int id) async {
+    final db = await database;
+    return db.delete(_noteTableName, where: 'id = ?', whereArgs: [id]); // Luu y ve SQL injection
+  }
 }

@@ -29,7 +29,14 @@ class _NoteListScreenState extends ConsumerState<NoteListScreen> {
                   final note = notes[index];
                   return Card(
                     child: Column(
-                      children: [Text(note.title), Text(note.content)],
+                      children: [
+                        Text(note.title),
+                        Text(note.content),
+                        IconButton(onPressed: () {
+
+                          ref.read(noteProvider.notifier).deleteNote(note.id!);
+                        }, icon: Icon(Icons.delete))
+                      ],
                     ),
                   );
                 },
